@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como configurar o Google Sheets – Turma Espacial</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#0b1a3b;--card:#1a2f5e;--card2:#223570;--border:rgba(255,255,255,.1);--yellow:#ffe94d;--green:#4de8a0;--blue:#4db8ff;--pink:#ff6eb4;--white:#f0f4ff;--muted:rgba(240,244,255,.55);--radius:16px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--sky);color:var(--white);font-family:'Nunito',sans-serif;min-height:100vh;padding-bottom:4rem;}
+header{background:rgba(11,26,59,.9);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;gap:12px;}
+.logo{font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--yellow);display:flex;align-items:center;gap:8px;}
+header a{margin-left:auto;color:var(--muted);font-size:.85rem;text-decoration:none;font-weight:700;}
+header a:hover{color:var(--blue);}
+.container{max-width:780px;margin:0 auto;padding:2rem 1.5rem;}
+h1{font-family:'Fredoka One',cursive;font-size:2rem;margin-bottom:.5rem;}
+h1 span{color:var(--yellow);}
+.subtitle{color:var(--muted);font-size:1rem;font-weight:600;margin-bottom:2.5rem;}
+.step{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:1.5rem;margin-bottom:1.25rem;}
+.step-header{display:flex;align-items:center;gap:14px;margin-bottom:1rem;}
+.step-num{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--pink));display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1.2rem;flex-shrink:0;}
+.step-header h2{font-family:'Fredoka One',cursive;font-size:1.15rem;}
+.step p{font-size:.92rem;color:var(--muted);line-height:1.65;font-weight:600;}
+.step p+p{margin-top:.6rem;}
+.step strong{color:var(--white);}
+.step .tag{display:inline-block;background:rgba(255,233,77,.15);color:var(--yellow);border:1px solid rgba(255,233,77,.3);border-radius:8px;padding:2px 10px;font-size:.8rem;font-weight:800;}
+code{font-family:'Courier New',monospace;background:rgba(77,184,255,.15);color:var(--blue);padding:2px 8px;border-radius:6px;font-size:.88em;}
+.table-wrap{overflow-x:auto;margin-top:1rem;border-radius:12px;border:1.5px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:.82rem;}
+th{background:rgba(255,255,255,.08);padding:10px 12px;text-align:left;font-weight:800;color:var(--yellow);white-space:nowrap;}
+td{padding:9px 12px;border-top:1px solid var(--border);color:var(--muted);font-weight:600;vertical-align:top;}
+td strong{color:var(--white);}
+.note{background:rgba(77,232,160,.08);border:1.5px solid rgba(77,232,160,.25);border-radius:14px;padding:1rem 1.25rem;margin-top:1.25rem;font-size:.9rem;font-weight:700;color:var(--green);}
+.note .n-icon{font-size:1.2rem;margin-right:6px;}
+.example-rows td:first-child{color:var(--blue);font-weight:800;}
+.copy-btn{display:inline-block;margin-top:.75rem;padding:10px 22px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--pink));color:#fff;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;border:none;transition:opacity .2s;}
+.copy-btn:hover{opacity:.85;}
+.url-box{background:rgba(0,0,0,.3);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;font-family:'Courier New',monospace;font-size:.82rem;color:var(--blue);word-break:break-all;margin-top:.75rem;line-height:1.6;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🚀 Turma Espacial</div>
+  <a href="index.html">← Ir para o site dos alunos</a>
+</header>
+
+<div class="container">
+  <h1>📋 Como configurar o <span>Google Sheets</span></h1>
+  <p class="subtitle">Siga estes passos para conectar sua planilha ao site. Leva menos de 10 minutos!</p>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><h2>Crie a planilha no Google Sheets</h2></div>
+    <p>Acesse <strong>sheets.google.com</strong> e crie uma nova planilha em branco.</p>
+    <p>Na <strong>primeira linha</strong>, adicione exatamente estes cabeçalhos (em minúsculas):</p>
+    <div class="table-wrap">
+      <table><tr><th>modulo</th><th>nome</th><th>icone</th><th>descricao</th><th>tipo</th><th>pergunta</th><th>opcoes</th><th>resposta</th><th>explicacao</th></tr>
+      <tr><td colspan="9" style="text-align:center;color:var(--muted);font-style:italic;padding:.5rem">← copie esses nomes exatamente como estão →</td></tr></table>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">2</div><h2>Entenda cada coluna</h2></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Coluna</th><th>O que colocar</th><th>Exemplo</th></tr>
+        <tr><td><code>modulo</code></td><td>ID único do módulo (sem espaços)</td><td>logica</td></tr>
+        <tr><td><code>nome</code></td><td>Nome bonito do módulo</td><td>Lógica de Programação</td></tr>
+        <tr><td><code>icone</code></td><td>Emoji do módulo</td><td>🧩</td></tr>
+        <tr><td><code>descricao</code></td><td>Descrição curta</td><td>Algoritmos e sequências</td></tr>
+        <tr><td><code>tipo</code></td><td><span class="tag">mc</span> múltipla escolha &nbsp;<span class="tag">tf</span> verdadeiro/falso &nbsp;<span class="tag">gap</span> lacuna</td><td>mc</td></tr>
+        <tr><td><code>pergunta</code></td><td>Texto da pergunta. Para <strong>gap</strong> use <code>___</code> no lugar da lacuna</td><td>O ___ é o cérebro do PC.</td></tr>
+        <tr><td><code>opcoes</code></td><td>Só para <strong>mc</strong>: opções separadas por <code>|</code></td><td>Monitor|CPU|Teclado|Mouse</td></tr>
+        <tr><td><code>resposta</code></td><td><strong>mc:</strong> número da opção correta (0 = primeira) · <strong>tf:</strong> <code>true</code> ou <code>false</code> · <strong>gap:</strong> texto esperado</td><td>1</td></tr>
+        <tr><td><code>explicacao</code></td><td>Mensagem exibida após responder (opcional)</td><td>A CPU processa tudo!</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">3</div><h2>Exemplo de linhas prontas</h2></div>
+    <p>Copie essas linhas como ponto de partida:</p>
+    <div class="table-wrap">
+      <table class="example-rows">
+        <tr><th>modulo</th><th>nome</th><th>icone</th><th>descricao</th><th>tipo</th><th>pergunta</th><th>opcoes</th><th>resposta</th><th>explicacao</th></tr>
+        <tr><td>logica</td><td>Lógica</td><td>🧩</td><td>Algoritmos</td><td>mc</td><td>O que é um algoritmo?</td><td>Vírus|Passos para resolver um problema|Jogo|Planilha</td><td>1</td><td>Algoritmo = sequência de passos!</td></tr>
+        <tr><td>logica</td><td>Lógica</td><td>🧩</td><td>Algoritmos</td><td>tf</td><td>Todo computador precisa de um sistema operacional.</td><td></td><td>true</td><td>Sem SO o PC não funciona!</td></tr>
+        <tr><td>windows</td><td>Windows</td><td>🪟</td><td>Sistema operacional</td><td>gap</td><td>Para copiar usamos ___ e para colar ___.</td><td></td><td>Ctrl+C|Ctrl+V</td><td>Ctrl+C copia e Ctrl+V cola!</td></tr>
+      </table>
+    </div>
+    <div class="note"><span class="n-icon">💡</span> Para <strong>gap</strong> com múltiplas lacunas, separe as respostas por <code>|</code> na mesma ordem das lacunas.</div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">4</div><h2>Publique a planilha na web</h2></div>
+    <p>No Google Sheets, clique em <strong>Arquivo → Compartilhar → Publicar na web</strong>.</p>
+    <p>Em "Toda a planilha", selecione o formato <strong>Valores separados por vírgula (.csv)</strong> e clique em <strong>Publicar</strong>. Confirme clicando em OK.</p>
+    <p style="margin-top:.8rem">Isso torna os dados acessíveis publicamente (apenas leitura). <strong>Não compartilhe dados sensíveis dos alunos aqui.</strong></p>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">5</div><h2>Copie o ID da planilha</h2></div>
+    <p>Na URL do Google Sheets, o ID fica entre <code>/d/</code> e <code>/edit</code>:</p>
+    <div class="url-box">https://docs.google.com/spreadsheets/d/<strong style="color:var(--yellow)">1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms</strong>/edit</div>
+    <p style="margin-top:.75rem">Copie apenas a parte destacada em amarelo (é um código longo com letras e números).</p>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">6</div><h2>Cole o ID no arquivo index.html</h2></div>
+    <p>Abra o arquivo <code>index.html</code> em um editor de texto (Bloco de Notas serve). Procure a linha:</p>
+    <div class="url-box">const SHEET_ID = '<strong style="color:var(--yellow)">SEU_ID_AQUI</strong>';</div>
+    <p style="margin-top:.75rem">Substitua <code>SEU_ID_AQUI</code> pelo ID copiado no passo anterior. Salve o arquivo e publique no GitHub Pages.</p>
+    <div class="note"><span class="n-icon">🔄</span> A partir daí, basta editar a planilha para adicionar ou modificar exercícios. O site atualiza automaticamente!</div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step">
+    <div class="step-header"><div class="step-num">7</div><h2>Pronto! Publique no GitHub Pages</h2></div>
+    <p>Faça upload do <code>index.html</code> e deste <code>como-configurar.html</code> no seu repositório GitHub.</p>
+    <p>Ative o GitHub Pages em <strong>Settings → Pages → Branch: main</strong> e compartilhe o link com seus alunos! 🎉</p>
+  </div>
+
+</div>
+</body>
+</html>
