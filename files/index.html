@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turma Espacial 🚀</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sky: #0b1a3b;
+  --sky2: #112252;
+  --card: #1a2f5e;
+  --card2: #223570;
+  --border: rgba(255,255,255,.1);
+  --yellow: #ffe94d;
+  --pink: #ff6eb4;
+  --green: #4de8a0;
+  --blue: #4db8ff;
+  --orange: #ff9a3c;
+  --red: #ff5f5f;
+  --white: #f0f4ff;
+  --muted: rgba(240,244,255,.55);
+  --radius: 20px;
+  --radius-lg: 28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--sky);
+  color:var(--white);
+  font-family:'Nunito',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Stars background */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,2s) ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(1);}50%{opacity:1;transform:scale(1.4);}}
+
+/* Header */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(11,26,59,.85);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:.75rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--yellow);}
+.logo-rocket{font-size:1.6rem;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);};}
+.score-badge{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,233,77,.15);
+  border:1px solid rgba(255,233,77,.35);
+  border-radius:99px;padding:6px 16px;
+  font-weight:800;font-size:.95rem;color:var(--yellow);
+}
+
+/* Hero */
+.hero{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:3rem 1.5rem 2rem;
+}
+.hero-planet{font-size:5rem;animation:float 4s ease-in-out infinite;display:inline-block;margin-bottom:.5rem;}
+.hero h1{font-family:'Fredoka One',cursive;font-size:2.6rem;line-height:1.1;margin-bottom:.6rem;}
+.hero h1 .glow{color:var(--yellow);text-shadow:0 0 30px rgba(255,233,77,.5);}
+.hero p{color:var(--muted);font-size:1.05rem;font-weight:600;max-width:420px;margin:0 auto;}
+
+/* Module grid */
+.modules{
+  position:relative;z-index:1;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  max-width:860px;margin:2rem auto;padding:0 1.5rem;
+}
+.mod-card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:1.5rem 1.25rem;
+  cursor:pointer;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.mod-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.06) 0%,transparent 70%);
+}
+.mod-card:hover{transform:translateY(-6px) scale(1.02);border-color:var(--yellow);}
+.mod-card.active{border-color:var(--yellow);background:var(--card2);box-shadow:0 0 30px rgba(255,233,77,.2);}
+.mod-emoji{font-size:3rem;margin-bottom:.6rem;display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3));}
+.mod-card h3{font-family:'Fredoka One',cursive;font-size:1.15rem;margin-bottom:.3rem;color:var(--white);}
+.mod-card p{font-size:.8rem;color:var(--muted);line-height:1.4;}
+.mod-pill{
+  display:inline-block;margin-top:.7rem;
+  font-size:.72rem;font-weight:800;
+  padding:4px 12px;border-radius:99px;
+  background:rgba(77,184,255,.2);color:var(--blue);
+  border:1px solid rgba(77,184,255,.3);
+}
+
+/* Exercises area */
+.ex-area{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 1.5rem 5rem;}
+
+/* Progress */
+.progress-section{margin:1.5rem 0 1rem;}
+.progress-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
+.progress-top h2{font-family:'Fredoka One',cursive;font-size:1.3rem;}
+.progress-top span{font-size:.85rem;color:var(--muted);font-weight:700;}
+.progress-track{height:12px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;}
+.progress-bar{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--pink));transition:width .6s cubic-bezier(.34,1.56,.64,1);}
+
+/* Exercise card */
+.ex-card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:1.5rem;
+  margin-bottom:1.2rem;
+  transition:border-color .3s,box-shadow .3s;
+  animation:slideIn .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes slideIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.ex-card.correct{border-color:var(--green);box-shadow:0 0 24px rgba(77,232,160,.2);}
+.ex-card.wrong{border-color:var(--red);box-shadow:0 0 24px rgba(255,95,95,.15);}
+
+.ex-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+.ex-num{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--pink));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fredoka One',cursive;font-size:1rem;flex-shrink:0;
+}
+.ex-type-tag{
+  font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:99px;
+  background:rgba(255,255,255,.08);color:var(--muted);border:1px solid var(--border);
+}
+.ex-question{font-size:1.05rem;font-weight:700;line-height:1.55;margin-bottom:1.2rem;color:var(--white);}
+.ex-question code{
+  font-family:'Courier New',monospace;
+  background:rgba(77,184,255,.15);color:var(--blue);
+  padding:2px 7px;border-radius:7px;font-size:.9em;
+}
+
+/* Options */
+.options{display:flex;flex-direction:column;gap:9px;}
+.opt{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;
+  background:rgba(255,255,255,.05);
+  border:2px solid rgba(255,255,255,.08);
+  border-radius:var(--radius);
+  cursor:pointer;font-size:.95rem;font-weight:700;
+  transition:all .18s;
+  user-select:none;
+}
+.opt:hover{background:rgba(77,184,255,.12);border-color:var(--blue);color:var(--blue);}
+.opt.selected{background:rgba(77,184,255,.18);border-color:var(--blue);color:var(--blue);}
+.opt.correct-opt{background:rgba(77,232,160,.15);border-color:var(--green)!important;color:var(--green)!important;}
+.opt.wrong-opt{background:rgba(255,95,95,.12);border-color:var(--red)!important;color:var(--red)!important;}
+.opt.disabled{cursor:default;pointer-events:none;}
+.opt-key{
+  width:28px;height:28px;border-radius:9px;
+  background:rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fredoka One',cursive;font-size:.85rem;flex-shrink:0;
+}
+
+/* TF */
+.tf-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.tf-btn{
+  padding:16px;border:2px solid rgba(255,255,255,.08);border-radius:var(--radius);
+  background:rgba(255,255,255,.05);
+  color:var(--white);font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;
+  cursor:pointer;transition:all .18s;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+}
+.tf-btn .tf-icon{font-size:1.8rem;}
+.tf-btn:hover{transform:translateY(-2px);}
+.tf-btn.v:hover,.tf-btn.v.selected{background:rgba(77,232,160,.15);border-color:var(--green);color:var(--green);}
+.tf-btn.f:hover,.tf-btn.f.selected{background:rgba(255,95,95,.12);border-color:var(--red);color:var(--red);}
+.tf-btn.correct-opt{background:rgba(77,232,160,.2)!important;border-color:var(--green)!important;color:var(--green)!important;}
+.tf-btn.wrong-opt{background:rgba(255,95,95,.15)!important;border-color:var(--red)!important;color:var(--red)!important;}
+.tf-btn.disabled{cursor:default;pointer-events:none;transform:none;}
+
+/* Gap fill */
+.gap-line{font-size:1rem;font-weight:700;line-height:2.8;display:flex;flex-wrap:wrap;align-items:center;gap:4px;}
+.gap-input{
+  border:none;border-bottom:3px solid var(--yellow);
+  background:transparent;color:var(--white);
+  font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;
+  padding:2px 8px;min-width:90px;outline:none;
+  transition:border-color .2s;text-align:center;
+}
+.gap-input::placeholder{color:rgba(255,255,255,.3);}
+.gap-input:focus{border-color:var(--pink);}
+.gap-input.correct-gap{border-color:var(--green)!important;color:var(--green);}
+.gap-input.wrong-gap{border-color:var(--red)!important;color:var(--red);}
+.gap-input.disabled{pointer-events:none;}
+
+/* Feedback bubble */
+.feedback{
+  margin-top:1rem;padding:12px 16px;border-radius:var(--radius);
+  font-size:.92rem;font-weight:700;display:none;
+  align-items:center;gap:10px;
+}
+.feedback.show{display:flex;}
+.feedback.ok{background:rgba(77,232,160,.15);color:var(--green);border:1.5px solid rgba(77,232,160,.3);}
+.feedback.err{background:rgba(255,95,95,.12);color:var(--red);border:1.5px solid rgba(255,95,95,.25);}
+.feedback-icon{font-size:1.4rem;flex-shrink:0;}
+
+/* Check button */
+.btn-check{
+  margin-top:1rem;
+  width:100%;padding:14px;border-radius:var(--radius);border:none;
+  background:linear-gradient(135deg,var(--blue),var(--pink));
+  color:#fff;font-family:'Fredoka One',cursive;font-size:1.1rem;
+  cursor:pointer;transition:all .2s;
+  box-shadow:0 4px 20px rgba(77,184,255,.3);
+}
+.btn-check:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(77,184,255,.4);}
+.btn-check:disabled{opacity:.35;cursor:default;transform:none;box-shadow:none;}
+
+/* Empty */
+.empty{text-align:center;padding:4rem 1rem;color:var(--muted);}
+.empty .big{font-size:4rem;margin-bottom:1rem;}
+.empty p{font-size:1rem;font-weight:700;line-height:1.6;}
+
+/* Confetti canvas */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:999;}
+
+/* Mascot toast */
+.mascot-toast{
+  position:fixed;bottom:2rem;right:1.5rem;z-index:500;
+  background:var(--card2);border:2px solid var(--yellow);
+  border-radius:var(--radius-lg);padding:14px 18px;
+  display:flex;align-items:center;gap:12px;
+  font-weight:800;font-size:.95rem;max-width:260px;
+  transform:translateY(120px);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.mascot-toast.show{transform:translateY(0);opacity:1;}
+.mascot-face{font-size:2rem;flex-shrink:0;}
+
+/* Loading */
+.loading{text-align:center;padding:3rem;color:var(--muted);}
+.loading .spin{font-size:3rem;display:inline-block;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* Responsive */
+@media(max-width:500px){
+  .hero h1{font-size:1.9rem;}
+  .modules{grid-template-columns:1fr 1fr;}
+  .mod-card{padding:1rem;}
+  .mod-emoji{font-size:2.2rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+<canvas id="confetti"></canvas>
+
+<header>
+  <div class="logo">
+    <span class="logo-rocket">🚀</span>
+    Turma Espacial
+  </div>
+  <div class="score-badge">⭐ <span id="scoreVal">0</span> pts</div>
+</header>
+
+<div class="hero">
+  <div class="hero-planet">🪐</div>
+  <h1>Hora de <span class="glow">aprender</span><br>e se divertir!</h1>
+  <p>Escolha uma missão e responda os exercícios! 🎮</p>
+</div>
+
+<div class="modules" id="modulesGrid">
+  <div class="loading"><div class="spin">🛸</div><p style="margin-top:.5rem">Carregando missões...</p></div>
+</div>
+
+<div class="ex-area" id="exArea"></div>
+
+<!-- Mascot toast -->
+<div class="mascot-toast" id="mascotToast">
+  <span class="mascot-face" id="mascotFace">🤖</span>
+  <span id="mascotMsg">Boa sorte!</span>
+</div>
+
+<script>
+/* ── CONFIG ─────────────────────────────────────────────────────────────
+   Substitua SHEET_ID pelo ID da sua planilha do Google Sheets.
+   O ID fica na URL: docs.google.com/spreadsheets/d/SEU_ID_AQUI/edit
+   A planilha precisa estar publicada como CSV (Arquivo → Compartilhar → Publicar na web → CSV)
+   ─────────────────────────────────────────────────────────────────── */
+const SHEET_ID = 'SEU_ID_AQUI';
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+
+// Dados de demonstração (usados quando SHEET_ID não foi configurado)
+const DEMO_DATA = [
+  {modulo:'logica',icone:'🧩',nome:'Lógica',descricao:'Algoritmos e sequências',tipo:'mc',pergunta:'O que é um algoritmo?',opcoes:'Receita de bolo|Lista de passos para resolver um problema|Um tipo de vírus|Uma linguagem de programação',resposta:'1',explicacao:'Um algoritmo é uma sequência de passos para resolver um problema!'},
+  {modulo:'logica',icone:'🧩',nome:'Lógica',descricao:'Algoritmos e sequências',tipo:'tf',pergunta:'Um computador consegue executar instruções sem um programa.',opcoes:'',resposta:'false',explicacao:'O computador precisa de um programa com instruções para funcionar!'},
+  {modulo:'logica',icone:'🧩',nome:'Lógica',descricao:'Algoritmos e sequências',tipo:'gap',pergunta:'Uma ___ é como uma caixinha que guarda um valor na memória do computador.',opcoes:'',resposta:'variável',explicacao:'Variável é o nome que damos a um espaço na memória que guarda dados!'},
+  {modulo:'intro',icone:'🖥️',nome:'Informática',descricao:'Mundo dos computadores',tipo:'mc',pergunta:'Qual parte do computador é chamada de "cérebro"?',opcoes:'Monitor|Teclado|Processador (CPU)|Mouse',resposta:'2',explicacao:'A CPU (processador) é o cérebro do computador, onde tudo é calculado!'},
+  {modulo:'intro',icone:'🖥️',nome:'Informática',descricao:'Mundo dos computadores',tipo:'tf',pergunta:'O mouse é um dispositivo de saída do computador.',opcoes:'',resposta:'false',explicacao:'O mouse é de ENTRADA! Você usa para enviar comandos ao computador.'},
+  {modulo:'windows',icone:'🪟',nome:'Windows',descricao:'Sistema operacional',tipo:'mc',pergunta:'Para copiar um arquivo no Windows, usamos qual atalho?',opcoes:'Ctrl + X|Ctrl + V|Ctrl + C|Ctrl + Z',resposta:'2',explicacao:'Ctrl+C copia, Ctrl+V cola e Ctrl+X recorta!'},
+  {modulo:'windows',icone:'🪟',nome:'Windows',descricao:'Sistema operacional',tipo:'tf',pergunta:'A Lixeira no Windows apaga os arquivos permanentemente na hora.',opcoes:'',resposta:'false',explicacao:'A Lixeira guarda os arquivos temporariamente. Você pode restaurá-los!'},
+  {modulo:'windows',icone:'🪟',nome:'Windows',descricao:'Sistema operacional',tipo:'gap',pergunta:'Para abrir o menu Iniciar do Windows, clicamos no botão ___.',opcoes:'',resposta:'iniciar',explicacao:'O botão Iniciar fica na barra de tarefas, geralmente no canto esquerdo!'},
+];
+
+// ── Gera estrelas ──────────────────────────────────────────────────────
+const starsEl = document.getElementById('stars');
+for(let i=0;i<80;i++){
+  const s=document.createElement('div');s.className='star';
+  const size=Math.random()*3+1;
+  s.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*3+1).toFixed(1)}s;animation-delay:${(Math.random()*3).toFixed(1)}s`;
+  starsEl.appendChild(s);
+}
+
+// ── State ──────────────────────────────────────────────────────────────
+let allData=[], modules=[], exercises=[];
+let currentModule=null, score=0, answeredCount=0;
+const answers={};
+
+// ── Load data ──────────────────────────────────────────────────────────
+async function loadData(){
+  if(SHEET_ID==='SEU_ID_AQUI'){
+    processData(DEMO_DATA);
+    return;
+  }
+  try{
+    const r=await fetch(SHEET_URL);
+    const csv=await r.text();
+    const rows=parseCSV(csv);
+    processData(rows);
+  }catch(e){
+    console.error(e);
+    processData(DEMO_DATA);
+  }
+}
+
+function parseCSV(text){
+  const lines=text.trim().split('\n');
+  const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim().toLowerCase());
+  return lines.slice(1).map(line=>{
+    const vals=[];let cur='',inQ=false;
+    for(const c of line){if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){vals.push(cur.trim());cur='';}else{cur+=c;}}
+    vals.push(cur.trim());
+    const obj={};headers.forEach((h,i)=>obj[h]=(vals[i]||'').replace(/^"|"$/g,''));
+    return obj;
+  });
+}
+
+function processData(rows){
+  allData=rows.filter(r=>r.modulo&&r.tipo&&r.pergunta);
+  const modMap={};
+  allData.forEach(r=>{
+    if(!modMap[r.modulo]) modMap[r.modulo]={id:r.modulo,nome:r.nome||r.modulo,icone:r.icone||'📚',descricao:r.descricao||''};
+  });
+  modules=Object.values(modMap);
+  renderModules();
+}
+
+// ── Render modules ─────────────────────────────────────────────────────
+function renderModules(){
+  const g=document.getElementById('modulesGrid');
+  if(!modules.length){g.innerHTML='<p style="color:var(--muted);text-align:center;padding:2rem">Nenhum módulo encontrado.</p>';return;}
+  g.innerHTML='';
+  modules.forEach(m=>{
+    const count=allData.filter(r=>r.modulo===m.id).length;
+    const card=document.createElement('div');
+    card.className='mod-card';
+    card.innerHTML=`<span class="mod-emoji">${m.icone}</span><h3>${m.nome}</h3><p>${m.descricao}</p><span class="mod-pill">${count} exercício${count!==1?'s':''}</span>`;
+    card.onclick=()=>selectModule(m.id,card);
+    g.appendChild(card);
+  });
+}
+
+// ── Select module ──────────────────────────────────────────────────────
+function selectModule(id,card){
+  document.querySelectorAll('.mod-card').forEach(c=>c.classList.remove('active'));
+  card.classList.add('active');
+  currentModule=id;
+  answeredCount=0;
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  exercises=allData.filter(r=>r.modulo===id).map((r,i)=>({...r,_id:`ex_${i}_${id}`}));
+  renderExercises();
+  setTimeout(()=>document.getElementById('exArea').scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+// ── Render exercises ───────────────────────────────────────────────────
+function renderExercises(){
+  const area=document.getElementById('exArea');
+  const mod=modules.find(m=>m.id===currentModule);
+  if(!exercises.length){
+    area.innerHTML=`<div class="empty"><div class="big">🛸</div><p>Nenhum exercício nesta missão ainda!<br>O professor vai adicionar em breve.</p></div>`;
+    return;
+  }
+  area.innerHTML=`
+    <div class="progress-section">
+      <div class="progress-top">
+        <h2>${mod.icone} Missão: ${mod.nome}</h2>
+        <span id="progText">0/${exercises.length}</span>
+      </div>
+      <div class="progress-track"><div class="progress-bar" id="progBar" style="width:0%"></div></div>
+    </div>
+  `;
+  exercises.forEach((ex,i)=>area.appendChild(buildCard(ex,i)));
+}
+
+function buildCard(ex,idx){
+  const card=document.createElement('div');
+  card.className='ex-card';card.id=ex._id;
+  const typeNames={mc:'Múltipla Escolha',tf:'Verdadeiro ou Falso',gap:'Complete a frase'};
+  let bodyHTML='';
+  if(ex.tipo==='mc'){
+    const opts=(ex.opcoes||'').split('|').filter(Boolean);
+    const keys=['A','B','C','D','E'];
+    bodyHTML=`<div class="options">${opts.map((o,i)=>`<div class="opt" onclick="pickOpt(this,'${ex._id}',${i})"><span class="opt-key">${keys[i]}</span>${o}</div>`).join('')}</div>`;
+  } else if(ex.tipo==='tf'){
+    bodyHTML=`<div class="tf-wrap">
+      <button class="tf-btn v" onclick="pickTF(this,'${ex._id}','true')"><span class="tf-icon">✅</span>Verdadeiro</button>
+      <button class="tf-btn f" onclick="pickTF(this,'${ex._id}','false')"><span class="tf-icon">❌</span>Falso</button>
+    </div>`;
+  } else if(ex.tipo==='gap'){
+    const parts=(ex.pergunta||'').split('___');
+    const answers=(ex.resposta||'').split('|');
+    let html=`<div class="gap-line">`;
+    parts.forEach((p,i)=>{
+      html+=`<span>${p}</span>`;
+      if(i<parts.length-1) html+=`<input class="gap-input" id="gap-${ex._id}-${i}" placeholder="???" autocomplete="off" spellcheck="false">`;
+    });
+    html+=`</div>`;
+    bodyHTML=html;
+  }
+  const questionHTML=ex.tipo==='gap'?'':(`<p class="ex-question">${ex.pergunta}</p>`);
+  card.innerHTML=`
+    <div class="ex-header">
+      <div class="ex-num">${idx+1}</div>
+      <span class="ex-type-tag">${typeNames[ex.tipo]||ex.tipo}</span>
+    </div>
+    ${questionHTML}
+    ${bodyHTML}
+    <div class="feedback" id="fb-${ex._id}"><span class="feedback-icon"></span><span class="feedback-text"></span></div>
+    <button class="btn-check" onclick="checkAnswer('${ex._id}')" id="btn-${ex._id}">🚀 Verificar!</button>
+  `;
+  return card;
+}
+
+// ── Interactions ───────────────────────────────────────────────────────
+const picks={};
+function pickOpt(el,id,i){
+  const card=document.getElementById(id);
+  if(card.classList.contains('answered')) return;
+  card.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  picks[id]=i;
+}
+function pickTF(el,id,val){
+  const card=document.getElementById(id);
+  if(card.classList.contains('answered')) return;
+  card.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  picks[id]=val;
+}
+
+function checkAnswer(id){
+  const ex=exercises.find(e=>e._id===id);
+  const card=document.getElementById(id);
+  const fb=document.getElementById(`fb-${id}`);
+  const btn=document.getElementById(`btn-${id}`);
+  let correct=false;
+
+  if(ex.tipo==='mc'){
+    if(picks[id]===undefined){showMascot('🤔','Clica em uma opção primeiro!',false);return;}
+    const correctIdx=parseInt(ex.resposta);
+    correct=picks[id]===correctIdx;
+    card.querySelectorAll('.opt').forEach((o,i)=>{
+      o.classList.add('disabled');
+      if(i===correctIdx) o.classList.add('correct-opt');
+      else if(i===picks[id]&&!correct) o.classList.add('wrong-opt');
+    });
+  } else if(ex.tipo==='tf'){
+    if(picks[id]===undefined){showMascot('🤔','Escolhe Verdadeiro ou Falso!',false);return;}
+    correct=picks[id]===ex.resposta.trim();
+    card.querySelectorAll('.tf-btn').forEach(b=>{
+      b.classList.add('disabled');
+      const isV=b.classList.contains('v');
+      if((isV&&ex.resposta.trim()==='true')||(!isV&&ex.resposta.trim()==='false')) b.classList.add('correct-opt');
+      else if(b.classList.contains('selected')) b.classList.add('wrong-opt');
+    });
+  } else if(ex.tipo==='gap'){
+    const inputs=card.querySelectorAll('.gap-input');
+    const expectedArr=(ex.resposta||'').split('|').map(s=>s.trim().toLowerCase());
+    let allOk=true;
+    inputs.forEach((inp,i)=>{
+      inp.classList.add('disabled');
+      const userVal=inp.value.trim().toLowerCase();
+      const exp=expectedArr[i]||expectedArr[0];
+      if(userVal===exp) inp.classList.add('correct-gap');
+      else{inp.classList.add('wrong-gap');allOk=false;}
+    });
+    correct=allOk;
+  }
+
+  card.classList.add('answered',correct?'correct':'wrong');
+  fb.querySelector('.feedback-icon').textContent=correct?'🌟':'💡';
+  fb.querySelector('.feedback-text').textContent=correct
+    ?'Incrível! '+( ex.explicacao||'Você acertou!')
+    :'Quase lá! '+(ex.explicacao||'Revise o conteúdo e tente de novo!');
+  fb.className=`feedback show ${correct?'ok':'err'}`;
+  btn.disabled=true;
+
+  if(correct){score+=10;document.getElementById('scoreVal').textContent=score;launchConfetti();}
+  showMascot(correct?'🥳':'😅',correct?'Arrasou! +10 pontos! ⭐':'Não desiste! Você vai conseguir! 💪',correct);
+
+  answeredCount++;
+  const total=exercises.length;
+  document.getElementById('progText').textContent=`${answeredCount}/${total}`;
+  document.getElementById('progBar').style.width=(answeredCount/total*100)+'%';
+
+  if(answeredCount===total){
+    setTimeout(()=>{
+      showMascot('🏆',`Missão completa! ${score} pontos!`,true);
+      launchConfetti();launchConfetti();
+    },800);
+  }
+}
+
+// ── Mascot ─────────────────────────────────────────────────────────────
+let mascotTimer;
+function showMascot(face,msg,ok){
+  const t=document.getElementById('mascotToast');
+  document.getElementById('mascotFace').textContent=face;
+  document.getElementById('mascotMsg').textContent=msg;
+  t.style.borderColor=ok?'var(--green)':ok===false?'var(--red)':'var(--yellow)';
+  t.classList.add('show');
+  clearTimeout(mascotTimer);
+  mascotTimer=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── Confetti ───────────────────────────────────────────────────────────
+function launchConfetti(){
+  const canvas=document.getElementById('confetti');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const pieces=[];
+  const colors=['#ffe94d','#ff6eb4','#4de8a0','#4db8ff','#ff9a3c','#c084fc'];
+  for(let i=0;i<80;i++) pieces.push({x:Math.random()*canvas.width,y:-10,r:Math.random()*6+4,c:colors[Math.floor(Math.random()*colors.length)],vx:(Math.random()-0.5)*6,vy:Math.random()*4+3,rot:Math.random()*360,vr:(Math.random()-0.5)*8});
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.vy+=.1;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.c;ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);ctx.restore();});
+    if(++frame<90) requestAnimationFrame(draw); else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+
+loadData();
+</script>
+</body>
+</html>
